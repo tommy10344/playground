@@ -63,6 +63,20 @@ func dbDelete(id int) {
 	db.Delete(&todo)
 }
 
+func dbDeleteAll() {
+	db, err := gorm.Open("sqlite3", "test.sqlite3")
+	if err != nil {
+		panic("Database opening error")
+	}
+	defer db.Close()
+
+	var todos []Todo
+	db.Order("created_at desc").Find(&todos)
+	for _, todo := range todos {
+		db.Delete(todo)
+	}
+}
+
 func dbGetAll() []Todo {
 	db, err := gorm.Open("sqlite3", "test.sqlite3")
 	if err != nil {
@@ -152,6 +166,12 @@ func main() {
 			panic(fmt.Sprintf("id is not integer: %s", n))
 		}
 		dbDelete(id)
+		c.Redirect(302, "/")
+	})
+
+	// Delete All
+	router.POST("/delete_all", func(c *gin.Context) {
+		dbDeleteAll()
 		c.Redirect(302, "/")
 	})
 
