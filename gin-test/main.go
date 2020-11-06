@@ -22,8 +22,9 @@ func dbInit() {
 	if err != nil {
 		panic("Database opening error")
 	}
-	db.AutoMigrate(&Todo{})
 	defer db.Close()
+
+	db.AutoMigrate(&Todo{})
 }
 
 func dbInsert(text string, status string) {
@@ -31,8 +32,9 @@ func dbInsert(text string, status string) {
 	if err != nil {
 		panic("Database opening error")
 	}
-	db.Create(&Todo{Text: text, Status: status})
 	defer db.Close()
+
+	db.Create(&Todo{Text: text, Status: status})
 }
 
 func dbUpdate(id int, text string, status string) {
@@ -40,12 +42,13 @@ func dbUpdate(id int, text string, status string) {
 	if err != nil {
 		panic("Database opening error")
 	}
+	defer db.Close()
+
 	var todo Todo
 	db.First(&todo, id)
 	todo.Text = text
 	todo.Status = status
 	db.Save(&todo)
-	defer db.Close()
 }
 
 func dbDelete(id int) {
@@ -53,10 +56,11 @@ func dbDelete(id int) {
 	if err != nil {
 		panic("Database opening error")
 	}
+	defer db.Close()
+
 	var todo Todo
 	db.First(&todo, id)
 	db.Delete(&todo)
-	defer db.Close()
 }
 
 func dbGetAll() []Todo {
@@ -64,9 +68,10 @@ func dbGetAll() []Todo {
 	if err != nil {
 		panic("Database opening error")
 	}
+	defer db.Close()
+
 	var todos []Todo
 	db.Order("created_at desc").Find(&todos)
-	defer db.Close()
 	return todos
 }
 
@@ -75,9 +80,10 @@ func dbGetOne(id int) Todo {
 	if err != nil {
 		panic("Database opening error")
 	}
+	defer db.Close()
+
 	var todo Todo
 	db.First(&todo, id)
-	defer db.Close()
 	return todo
 }
 
