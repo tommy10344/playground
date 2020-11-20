@@ -1,0 +1,15 @@
+.todo-item:first-child {
+  border-top: solid 0.5px lightgray;
+}
+.todo-item {
+  border-bottom: solid 0.5px lightgray;
+}
+
+.todo-title {
+  font-size: large;
+  font-weight: bold;
+}
+
+.todo-status {
+  font-size: medium;
+}

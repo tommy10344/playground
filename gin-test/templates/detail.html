@@ -18,18 +18,18 @@
       <p>
         状態
         <select name="status">
-          {{if eq .todo.Status "未実行"}}
-          <option value="未実行" selected>未実行</option>
-          <option value="実行中">実行中</option>
-          <option value="終了">終了</option>
-          {{else if eq .todo.Status "実行中"}}
-          <option value="未実行">未実行</option>
-          <option value="実行中" selected>実行中</option>
-          <option value="終了">終了</option>
+          {{if eq .todo.Status "New"}}
+          <option value="New" selected>New</option>
+          <option value="Active">Active</option>
+          <option value="Done">Done</option>
+          {{else if eq .todo.Status "Active"}}
+          <option value="New">New</option>
+          <option value="Active" selected>Active</option>
+          <option value="Done">Done</option>
           {{else}}
-          <option value="未実行">未実行</option>
-          <option value="実行中">実行中</option>
-          <option value="終了" selected>終了</option>
+          <option value="New">New</option>
+          <option value="Active">Active</option>
+          <option value="Done" selected>Done</option>
           {{end}}
         </select>
       </p>
